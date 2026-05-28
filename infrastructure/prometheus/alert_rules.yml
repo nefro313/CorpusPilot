@@ -1,0 +1,126 @@
+groups:
+  - name: rag_quality
+    rules:
+      - alert: LowGroundedRate
+        expr: |
+          (
+            sum(rate(rag_requests_total{grounded="true"}[10m])) by (domain)
+            /
+            sum(rate(rag_requests_total[10m])) by (domain)
+          ) < 0.60
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Grounded rate below 60% for domain {{ $labels.domain }}"
+          description: >
+            Less than 60% of answers for {{ $labels.domain }} are grounded
+            (have valid citations). Check retrieval quality or prompt changes.
+
+      - alert: HighP95Latency
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum(rate(rag_request_latency_seconds_bucket[10m])) by (le, domain)
+          ) > 20
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RAG P95 latency > 20s for domain {{ $labels.domain }}"
+          description: >
+            P95 latency for {{ $labels.domain }} exceeds 20 seconds.
+            Use rag_node_latency_seconds to identify the slow node.
+
+      - alert: HighNodeLatency
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum(rate(rag_node_latency_seconds_bucket[10m])) by (le, domain, node)
+          ) > 8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Node {{ $labels.node }} P95 > 8s (domain: {{ $labels.domain }})"
+          description: >
+            The {{ $labels.node }} node is taking over 8 seconds at P95
+            for domain {{ $labels.domain }}.
+
+  - name: rag_cost
+    rules:
+      - alert: HighHourlyCost
+        expr: |
+          sum(rate(llm_cost_usd_total[1h])) * 3600 > 1.0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "LLM spend exceeds $1/hour"
+          description: >
+            Estimated LLM cost is running above $1 per hour.
+            Check for runaway uploads or query loops.
+
+      - alert: CriticalHourlyCost
+        expr: |
+          sum(rate(llm_cost_usd_total[1h])) * 3600 > 5.0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "LLM spend exceeds $5/hour — possible abuse"
+          description: >
+            LLM cost is above $5/hour. Consider rate-limiting
+            or temporarily disabling the /api/chat endpoints.
+
+  - name: rag_ingestion
+    rules:
+      - alert: HighRejectionRate
+        expr: |
+          (
+            sum(rate(document_ingestions_total{status="rejected"}[30m])) by (domain, stage)
+            /
+            sum(rate(document_ingestions_total[30m])) by (domain, stage)
+          ) > 0.50
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: >
+            Over 50% of uploads rejected at stage {{ $labels.stage }}
+            (domain: {{ $labels.domain }})
+          description: >
+            High rejection rate at the {{ $labels.stage }} stage suggests
+            LlamaParse failures, domain classifier being too strict,
+            or users uploading wrong file types.
+
+  - name: rag_infrastructure
+    rules:
+      - alert: BM25CacheThrashing
+        expr: |
+          sum(rate(bm25_cache_events_total{event="invalidate"}[10m])) by (domain) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "BM25 cache invalidating more than once per 2 min (domain: {{ $labels.domain }})"
+          description: >
+            Frequent cache invalidations for {{ $labels.domain }} suggest
+            a high upload rate is causing BM25 rebuilds on every query.
+            Consider batching uploads or adding a rebuild debounce.
+
+      - alert: SqlRagHighErrorRate
+        expr: |
+          (
+            sum(rate(sql_rag_attempts_total{outcome="error"}[10m]))
+            /
+            sum(rate(sql_rag_attempts_total[10m]))
+          ) > 0.20
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "SQL-RAG error rate above 20%"
+          description: >
+            More than 20% of financial SQL-RAG attempts are erroring.
+            Check LLM SQL generation quality and document_table_rows schema.

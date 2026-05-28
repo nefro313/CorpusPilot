@@ -1,0 +1,59 @@
+<svg width="100%" viewBox="0 0 680 220" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Ask My Docs logo</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Ask My Docs logo with domain labels on document icon</desc>
+
+  <g transform="translate(30, 18)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+
+    <!-- Back page -->
+    <rect x="22" y="12" width="124" height="140" rx="10" fill="#0d1f35" stroke="#1a3a5c" stroke-width="0.8" style="fill:rgb(13, 31, 53);stroke:rgb(26, 58, 92);color:rgb(255, 255, 255);stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Mid page -->
+    <rect x="11" y="7" width="124" height="140" rx="10" fill="#0f2540" stroke="#1e4870" stroke-width="0.8" style="fill:rgb(15, 37, 64);stroke:rgb(30, 72, 112);color:rgb(255, 255, 255);stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Front page -->
+    <rect x="0" y="0" width="124" height="140" rx="10" fill="#112a50" stroke="#00cccc" stroke-width="1.4" style="fill:rgb(17, 42, 80);stroke:rgb(0, 204, 204);color:rgb(255, 255, 255);stroke-width:1.4px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Corner fold top-right -->
+    <polygon points="92,0 124,0 124,32" fill="#0a1f38" style="fill:rgb(10, 31, 56);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <polyline fill="none" stroke="#00cccc" stroke-width="1.1" stroke-linecap="round" points="92,0 92,32 124,32" opacity="0.85" style="fill:none;stroke:rgb(0, 204, 204);color:rgb(255, 255, 255);stroke-width:1.1px;stroke-linecap:round;stroke-linejoin:miter;opacity:0.85;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Top title lines -->
+    <rect x="14" y="14" width="62" height="7" rx="3.5" fill="#00cccc" opacity="0.95" style="fill:rgb(0, 204, 204);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.95;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <rect x="14" y="28" width="50" height="5" rx="2.5" fill="#00cccc" opacity="0.35" style="fill:rgb(0, 204, 204);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.35;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Divider -->
+    <line x1="14" y1="41" x2="110" y2="41" stroke="#1e3f6a" stroke-width="0.7" style="fill:rgb(0, 0, 0);stroke:rgb(30, 63, 106);color:rgb(255, 255, 255);stroke-width:0.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Domain bar 1 — Technical (cyan) -->
+    <rect x="14" y="48" width="96" height="19" rx="5" fill="#0a2540" stroke="#1a4a6a" stroke-width="0.7" style="fill:rgb(10, 37, 64);stroke:rgb(26, 74, 106);color:rgb(255, 255, 255);stroke-width:0.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <rect x="19" y="52.5" width="4" height="10" rx="2" fill="#00cccc" style="fill:rgb(0, 204, 204);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <text x="28" y="62" font-size="9.5" font-family="sans-serif" font-weight="600" fill="#00cccc" opacity="0.85" style="fill:rgb(0, 204, 204);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.85;font-family:sans-serif;font-size:9.5px;font-weight:600;text-anchor:start;dominant-baseline:auto">Technical</text>
+
+    <!-- Domain bar 2 — Research (amber) -->
+    <rect x="14" y="72" width="96" height="19" rx="5" fill="#0a2540" stroke="#1a4a6a" stroke-width="0.7" style="fill:rgb(10, 37, 64);stroke:rgb(26, 74, 106);color:rgb(255, 255, 255);stroke-width:0.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <rect x="19" y="76.5" width="4" height="10" rx="2" fill="#f0a030" style="fill:rgb(240, 160, 48);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <text x="28" y="86" font-size="9.5" font-family="sans-serif" font-weight="600" fill="#f0a030" opacity="0.85" style="fill:rgb(240, 160, 48);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.85;font-family:sans-serif;font-size:9.5px;font-weight:600;text-anchor:start;dominant-baseline:auto">Research</text>
+
+    <!-- Domain bar 3 — Legal (purple) -->
+    <rect x="14" y="96" width="96" height="19" rx="5" fill="#0a2540" stroke="#1a4a6a" stroke-width="0.7" style="fill:rgb(10, 37, 64);stroke:rgb(26, 74, 106);color:rgb(255, 255, 255);stroke-width:0.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <rect x="19" y="100.5" width="4" height="10" rx="2" fill="#9966ff" style="fill:rgb(153, 102, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <text x="28" y="110" font-size="9.5" font-family="sans-serif" font-weight="600" fill="#9966ff" opacity="0.85" style="fill:rgb(153, 102, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.85;font-family:sans-serif;font-size:9.5px;font-weight:600;text-anchor:start;dominant-baseline:auto">Legal</text>
+
+    <!-- Domain bar 4 — Healthcare (green) -->
+    <rect x="14" y="120" width="96" height="19" rx="5" fill="#0a2540" stroke="#1a4a6a" stroke-width="0.7" style="fill:rgb(10, 37, 64);stroke:rgb(26, 74, 106);color:rgb(255, 255, 255);stroke-width:0.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <rect x="19" y="124.5" width="4" height="10" rx="2" fill="#22bb88" style="fill:rgb(34, 187, 136);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <text x="28" y="134" font-size="9.5" font-family="sans-serif" font-weight="600" fill="#22bb88" opacity="0.85" style="fill:rgb(34, 187, 136);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.85;font-family:sans-serif;font-size:9.5px;font-weight:600;text-anchor:start;dominant-baseline:auto">Healthcare</text>
+
+    <!-- Bottom cyan accent line -->
+    <line x1="0" y1="140" x2="124" y2="140" stroke="#00cccc" stroke-width="1.8" stroke-linecap="round" opacity="0.7" style="fill:rgb(0, 0, 0);stroke:rgb(0, 204, 204);color:rgb(255, 255, 255);stroke-width:1.8px;stroke-linecap:round;stroke-linejoin:miter;opacity:0.7;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  </g>
+
+  <!-- === WORDMARK === -->
+  <text x="184" y="88" font-size="58" font-family="sans-serif" font-weight="700" fill="#ffffff" letter-spacing="-1.5" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:58px;font-weight:700;text-anchor:start;dominant-baseline:auto">Ask My</text>
+
+  <text x="184" y="152" font-size="58" font-family="sans-serif" font-weight="700" fill="#00cccc" letter-spacing="-1.5" style="fill:rgb(0, 204, 204);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:58px;font-weight:700;text-anchor:start;dominant-baseline:auto">Docs</text>
+
+  <text x="186" y="182" font-size="13" font-family="sans-serif" font-weight="400" fill="#4a7aa0" letter-spacing="2" style="fill:rgb(74, 122, 160);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:13px;font-weight:400;text-anchor:start;dominant-baseline:auto">MULTI-DOMAIN DOCUMENT ASSISTANT</text>
+
+</svg>

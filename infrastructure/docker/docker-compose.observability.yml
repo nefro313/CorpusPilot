@@ -1,0 +1,46 @@
+# Local AIOps stack: Prometheus + Grafana + Tempo.
+# Run alongside the main stack with:
+#   docker compose \
+#     -f infrastructure/docker/docker-compose.yml \
+#     -f infrastructure/docker/docker-compose.observability.yml \
+#     up -d
+#
+# After it boots:
+#   Prometheus: http://localhost:9090
+#   Grafana:    http://localhost:3001   (admin / admin)
+#   Tempo OTLP: backend container should set
+#     OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.55.0
+    volumes:
+      - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-lifecycle"
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ../grafana/provisioning:/etc/grafana/provisioning:ro
+      - ../grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+
+  tempo:
+    image: grafana/tempo:2.6.0
+    command: ["-config.file=/etc/tempo/tempo.yaml"]
+    volumes:
+      - ../tempo/tempo.yaml:/etc/tempo/tempo.yaml:ro
+    ports:
+      - "3200:3200"   # tempo UI / API
+      - "4317:4317"   # OTLP gRPC

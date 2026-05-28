@@ -1,0 +1,153 @@
+[project]
+name = "ask-my-docs"
+version = "0.2.0"
+description = "Multi-domain RAG with PostgreSQL, Milvus, LangChain, LangGraph, LangSmith, and RAGAS"
+requires-python = ">=3.12"
+dependencies = [
+    # Web layer
+    "fastapi[standard]>=0.115",
+    "python-multipart>=0.0.12",
+    "pydantic-settings>=2.6",
+    "python-dotenv>=1.0",
+    # Storage
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg>=0.30",
+    "alembic>=1.13",
+    "pymilvus>=2.4",
+    # LLM clients + retrieval
+    "openai>=1.50",
+    "tiktoken>=0.9.0",
+    "langchain>=0.3.20",
+    "langchain-core>=0.3.44",
+    "langchain-community>=0.3.19",
+    "langchain-openai>=0.3.8",
+    "langchain-cohere>=0.5.1",
+    "langchain-text-splitters>=0.3.6",
+    "langgraph>=0.3.11",
+    "rank-bm25>=0.2.2",
+    "llama-index-core>=0.14.21",
+    "llama-index-vector-stores-milvus>=1.1.0",
+    "llama-index-embeddings-openai>=0.6.0",
+    "llama-cloud-services>=0.6",
+    "pypdf>=5.4.0",
+    "prometheus-client>=0.20",
+    "opentelemetry-api>=1.27",
+    "opentelemetry-sdk>=1.27",
+    "opentelemetry-exporter-otlp-proto-grpc>=1.27",
+    "opentelemetry-instrumentation-fastapi>=0.48b0",
+    "opentelemetry-instrumentation-sqlalchemy>=0.48b0",
+    "opentelemetry-instrumentation-httpx>=0.48b0",
+]
+
+[project.optional-dependencies]
+# Installed only when running the RAGAS evaluation script.
+# `pip install -e ".[eval]"` or `uv sync --extra eval`.
+eval = [
+    "ragas>=0.3.5",
+    "langsmith>=0.3.13",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "types-requests>=2.32",
+    "pre-commit>=3.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# ---------------------------------------------------------------------------
+# uv resolver overrides
+# ---------------------------------------------------------------------------
+# `pymilvus` declares `milvus-lite` as a default dep on macOS / Linux. We
+# always talk to Zilliz Cloud, so the embedded server binary is dead weight;
+# `override-dependencies` excludes it cleanly without forking pymilvus.
+[tool.uv]
+override-dependencies = [
+    "milvus-lite ; sys_platform == 'never'",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "src/api",
+    "src/core",
+    "src/domain",
+    "src/schemas",
+    "src/services",
+    "src/storage",
+    "src/vectorstores",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests", "scripts"]
+extend-exclude = [".venv", "build", "dist", "evals/experiments"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+    "SIM",  # flake8-simplify
+    "RUF",  # ruff-specific
+    "C4",   # flake8-comprehensions
+    "PIE",  # flake8-pie
+    "T20",  # flake8-print
+    "PTH",  # flake8-use-pathlib
+]
+ignore = [
+    "E501",  # line length — handled by formatter
+    "B008",  # FastAPI uses Depends() defaults
+    "SIM117",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20", "B011", "S101"]
+# run_evals.py intentionally configures warnings filters before its imports
+# (to suppress noisy ragas/langchain deprecations at import time).
+"scripts/run_evals.py" = ["T20", "E402", "B905"]
+"scripts/**" = ["T20"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src"]
+ignore_missing_imports = true
+disallow_untyped_defs = false
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unreachable = true
+check_untyped_defs = true
+no_implicit_optional = true
+strict_equality = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*", "scripts.*"]
+ignore_errors = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+addopts = "-ra --strict-markers --strict-config"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]

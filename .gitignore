@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+
+
+# IDE
+.vscode/
+.idea/
+
+.claude/
+AGENTS.MD
+PROJECT_STATE.MD
+
+docs/
+.github/
+
+Makefile
+*.DS_Store

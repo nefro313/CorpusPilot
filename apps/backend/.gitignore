@@ -1,0 +1,25 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environment
+.venv/
+
+# Type / lint / test caches
+.claude/
+.ruff_cache/
+.pytest_cache/
+
+
+
+# Environment / Secrets
+.env
+.env.*
+.env.local
+
+# Generated eval results
+evals/
+
