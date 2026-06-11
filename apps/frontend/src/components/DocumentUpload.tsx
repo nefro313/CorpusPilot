@@ -143,10 +143,13 @@ export default function DocumentUpload({ onUpload, selectedDomain, onDomainChang
           if (eventType === "batch_complete") {
             const summary = data as BatchUploadSummary;
             setBatchSummary(summary);
-            setMessage({
-              text: buildBatchMessage(summary, selectedDomain),
-              type: summary.indexed_count > 0 || summary.duplicate_count > 0 ? "ok" : "err",
-            });
+            setProgress(null);
+            if (summary.indexed_count === 0 && summary.duplicate_count === 0) {
+              setMessage({
+                text: `No ${prettyDomain(selectedDomain).toLowerCase()} files were indexed. Review the file reports below.`,
+                type: "err",
+              });
+            }
             setFiles([]);
             if (inputRef.current) inputRef.current.value = "";
             onUpload();
@@ -194,10 +197,9 @@ export default function DocumentUpload({ onUpload, selectedDomain, onDomainChang
               <span>Retrieval</span>
               <strong>{activeDomain.retrieval_strategy}</strong>
             </div>
-            <div className="profile-line">
-              <span>Guardrail</span>
-              <strong>Each file is checked from page one before full parsing starts.</strong>
-            </div>
+            <p className="profile-note">
+              Each file is checked from page one before full parsing starts.
+            </p>
           </div>
         )}
 
@@ -291,6 +293,23 @@ export default function DocumentUpload({ onUpload, selectedDomain, onDomainChang
           </div>
         )}
 
+        {batchSummary && (
+          <div className="batch-report" role="status" aria-live="polite">
+            <div className={`batch-stat indexed${batchSummary.indexed_count ? " filled" : ""}`}>
+              <strong>{batchSummary.indexed_count}</strong>
+              <span>Indexed</span>
+            </div>
+            <div className={`batch-stat duplicate${batchSummary.duplicate_count ? " filled" : ""}`}>
+              <strong>{batchSummary.duplicate_count}</strong>
+              <span>Duplicates</span>
+            </div>
+            <div className={`batch-stat rejected${batchSummary.rejected_count ? " filled" : ""}`}>
+              <strong>{batchSummary.rejected_count}</strong>
+              <span>Rejected</span>
+            </div>
+          </div>
+        )}
+
         {results.length > 0 && (
           <div className="result-list">
             {results.map((result, index) => {
@@ -306,8 +325,8 @@ export default function DocumentUpload({ onUpload, selectedDomain, onDomainChang
                   className={`result-card ${result.status}`}
                 >
                   <div className="result-top">
+                    <strong title={result.filename}>{result.filename}</strong>
                     <span className={`result-badge ${result.status}`}>{result.status}</span>
-                    <strong>{result.filename}</strong>
                   </div>
                   <p>{result.message}</p>
                   {result.rejection_reason ? (
@@ -327,28 +346,9 @@ export default function DocumentUpload({ onUpload, selectedDomain, onDomainChang
             })}
           </div>
         )}
-
-        {batchSummary && batchSummary.rejected_count > 0 ? (
-          <div className="empty-card compact">
-            Rejected files were skipped instead of blocking the whole batch. Re-upload them after
-            inspecting the message above.
-          </div>
-        ) : null}
       </section>
     </div>
   );
-}
-
-function buildBatchMessage(summary: BatchUploadSummary, domain: CorpusDomain) {
-  if (summary.indexed_count === 0 && summary.duplicate_count === 0) {
-    return `No ${prettyDomain(domain).toLowerCase()} files were indexed. Review the messages above.`;
-  }
-  const parts = [
-    `${summary.indexed_count} indexed`,
-    `${summary.duplicate_count} duplicates reused`,
-  ];
-  if (summary.rejected_count > 0) parts.push(`${summary.rejected_count} rejected during parsing`);
-  return parts.join(" · ");
 }
 
 function dedupeFiles(files: File[]) {

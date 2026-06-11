@@ -7,10 +7,9 @@ interface Props {
   messages: ChatMessage[];
   loading: boolean;
   onFollowUp: (question: string) => void;
-  onFeedback: (index: number, rating: -1 | 1 | null) => void;
 }
 
-export function MessageList({ messages, loading, onFollowUp, onFeedback }: Props) {
+export function MessageList({ messages, loading, onFollowUp }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,19 +18,9 @@ export function MessageList({ messages, loading, onFollowUp, onFeedback }: Props
 
   return (
     <div className="message-list">
-      {messages.map((message, index) => {
-        const previous = index > 0 ? messages[index - 1] : null;
-        const questionForFeedback = previous?.role === "user" ? previous.content : "";
-        return (
-          <MessageCard
-            key={index}
-            message={message}
-            questionForFeedback={questionForFeedback}
-            onFollowUp={onFollowUp}
-            onFeedback={(rating) => onFeedback(index, rating)}
-          />
-        );
-      })}
+      {messages.map((message, index) => (
+        <MessageCard key={index} message={message} onFollowUp={onFollowUp} />
+      ))}
       <div ref={bottomRef} />
     </div>
   );

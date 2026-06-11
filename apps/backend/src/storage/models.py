@@ -15,7 +15,9 @@ class Base(DeclarativeBase):
 class Document(Base):
     __tablename__ = "documents"
     __table_args__ = (
-        UniqueConstraint("user_id", "checksum", name="uq_documents_user_checksum"),
+        UniqueConstraint(
+            "user_id", "domain", "checksum", name="uq_documents_user_domain_checksum"
+        ),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)

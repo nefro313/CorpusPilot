@@ -1,22 +1,16 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.config import get_settings
 from domain.profiles import CorpusDomain
 from schemas.api import (
-    AnomalyOut,
-    AnomalyResponse,
     DomainMetricOut,
-    FeedbackSummary,
     ObservabilityResponse,
     ObservabilitySummary,
 )
-from services.observability.anomalies import DEFAULT_THRESHOLD, detect_anomalies
-from services.observability.feedback import summarise_feedback
 from storage.database import get_db
 from storage.models import QueryTrace
-from storage.repositories.feedback_repo import recent_feedback
 
 router = APIRouter(prefix="/api/observability", tags=["observability"])
 settings = get_settings()
@@ -79,23 +73,3 @@ async def observability_summary(db: AsyncSession = Depends(get_db)) -> Observabi
             by_domain.append(build_domain_metric(domain, domain_rows))
 
     return ObservabilityResponse(summary=summary, by_domain=by_domain)
-
-
-@router.get("/anomalies", response_model=AnomalyResponse)
-async def observability_anomalies(
-    threshold: float = Query(default=DEFAULT_THRESHOLD, ge=1.0, le=6.0),
-    db: AsyncSession = Depends(get_db),
-) -> AnomalyResponse:
-    rows = await _recent_traces(db, settings.observability_recent_runs)
-    anomalies = detect_anomalies(rows, threshold=threshold)
-    return AnomalyResponse(
-        threshold=threshold,
-        sample_size=len(rows),
-        anomalies=[AnomalyOut(**anomaly.to_dict()) for anomaly in anomalies],
-    )
-
-
-@router.get("/feedback", response_model=FeedbackSummary)
-async def observability_feedback(db: AsyncSession = Depends(get_db)) -> FeedbackSummary:
-    rows = await recent_feedback(db, limit=settings.observability_recent_runs)
-    return summarise_feedback(rows)

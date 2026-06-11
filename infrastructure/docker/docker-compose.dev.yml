@@ -1,0 +1,45 @@
+# Local dev stack — hot reload, no Traefik, ports published directly.
+#   docker compose -f docker-compose.dev.yml up --build
+# backend: http://localhost:8000   frontend: http://localhost:5173
+
+name: ask-my-docs-dev
+
+services:
+  backend:
+    build:
+      context: ../../apps/backend
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: ask-my-docs-backend-dev
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file: .env.prod
+    environment:
+      CORS_ORIGINS: http://localhost:5173
+    volumes:
+      - ../../apps/backend:/app
+      - /app/.venv          # keep the image's venv under the bind mount
+    command: fastapi dev src/app.py --host 0.0.0.0 --port 8000
+
+  frontend:
+    build:
+      context: ../../apps/frontend
+      dockerfile: Dockerfile
+      target: deps          # stop after npm install; source comes from the mount
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+    container_name: ask-my-docs-frontend-dev
+    restart: unless-stopped
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    environment:
+      API_PROXY_TARGET: http://backend:8000
+    volumes:
+      - ../../apps/frontend:/app
+      - /app/node_modules   # keep the image's node_modules under the bind mount
+    depends_on:
+      - backend
+    command: npm run dev -- --host 0.0.0.0

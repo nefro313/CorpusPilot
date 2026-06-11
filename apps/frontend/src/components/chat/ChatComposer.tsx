@@ -48,6 +48,9 @@ export function ChatComposer({ value, onChange, onSubmit, loading, selectedDomai
       <button type="submit" className="composer-send" disabled={loading || !value.trim()}>
         <Send size={16} />
       </button>
+      <p className="composer-hint" aria-hidden>
+        <kbd>Enter</kbd> to send · <kbd>Shift</kbd> + <kbd>Enter</kbd> for a new line
+      </p>
     </form>
   );
 }

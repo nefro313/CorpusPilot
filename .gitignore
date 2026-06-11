@@ -1,3 +1,10 @@
+# Env files with secrets — never commit
+.env
+.env.prod
+.env.local
+apps/backend/.env
+apps/frontend/.env
+
 # Python
 __pycache__/
 

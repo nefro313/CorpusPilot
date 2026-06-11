@@ -1,13 +1,24 @@
 import type {
-  AnomalyResponse,
   ChatResponse,
   DocumentItem,
   FeedbackAck,
   FeedbackRequest,
-  FeedbackSummary,
   ObservabilityResponse,
 } from "../types";
 import { getUserId } from "../hooks/useUserId";
+import { supabase } from "../lib/supabase";
+
+/**
+ * Supabase access token for the current session, refreshed automatically by
+ * supabase-js. Empty when signed out so the backend falls back to X-User-ID.
+ */
+export async function authHeader(): Promise<Record<string, string>> {
+  if (!supabase) return {};
+  const { data } = await supabase.auth.getSession();
+  return data.session
+    ? { Authorization: `Bearer ${data.session.access_token}` }
+    : {};
+}
 
 export class ApiError extends Error {
   constructor(
@@ -26,6 +37,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     headers: {
       Accept: "application/json",
       "X-User-ID": getUserId(),
+      ...(await authHeader()),
       ...(init?.body && !(init?.body instanceof FormData)
         ? { "Content-Type": "application/json" }
         : {}),
@@ -58,9 +70,6 @@ export const api = {
 
   observabilitySummary: () =>
     request<ObservabilityResponse>("/api/observability/summary"),
-  anomalies: (threshold = 2.5) =>
-    request<AnomalyResponse>(`/api/observability/anomalies?threshold=${threshold}`),
-  feedbackSummary: () => request<FeedbackSummary>("/api/observability/feedback"),
 
   postFeedback: (payload: FeedbackRequest) =>
     request<FeedbackAck>("/api/chat/feedback", {

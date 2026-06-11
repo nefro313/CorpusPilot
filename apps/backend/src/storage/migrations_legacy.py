@@ -107,10 +107,27 @@ async def migrate_documents_table(conn: AsyncConnection) -> None:
         )
         await conn.execute(text("UPDATE documents SET total_chunks = 0 WHERE total_chunks IS NULL"))
 
+    if not await _column_exists(conn, "documents", "user_id"):
+        await conn.execute(text("ALTER TABLE documents ADD COLUMN user_id VARCHAR(128)"))
+        await conn.execute(
+            text("UPDATE documents SET user_id = 'anonymous' WHERE user_id IS NULL")
+        )
+        await conn.execute(text("ALTER TABLE documents ALTER COLUMN user_id SET NOT NULL"))
+
+    # Dedup is scoped per (user, domain): the same file may be indexed into
+    # different domains. Drop the older, broader unique indexes/constraints
+    # that blocked cross-domain re-uploads.
+    await conn.execute(text("DROP INDEX IF EXISTS idx_documents_checksum_unique"))
+    await conn.execute(
+        text("ALTER TABLE documents DROP CONSTRAINT IF EXISTS documents_checksum_key")
+    )
+    await conn.execute(
+        text("ALTER TABLE documents DROP CONSTRAINT IF EXISTS uq_documents_user_checksum")
+    )
     await conn.execute(
         text(
-            "CREATE UNIQUE INDEX IF NOT EXISTS idx_documents_checksum_unique "
-            "ON documents (checksum)"
+            "CREATE UNIQUE INDEX IF NOT EXISTS uq_documents_user_domain_checksum "
+            "ON documents (user_id, domain, checksum)"
         )
     )
 

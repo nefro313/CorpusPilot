@@ -24,7 +24,7 @@ export default function ChatPanel({ selectedDomain, onInteractionComplete, metri
   const [question, setQuestion] = useState("");
   const [sessionId, setSessionId] = useState<string>(() => newSessionId());
   const [statsOpen, setStatsOpen] = useState(false);
-  const { messages, loading, send, reset, setFeedback } = useChatStream();
+  const { messages, loading, send, reset } = useChatStream();
   const lastDomainRef = useRef<CorpusDomain>(selectedDomain);
 
   useEffect(() => {
@@ -94,7 +94,10 @@ export default function ChatPanel({ selectedDomain, onInteractionComplete, metri
     <div className="chat-shell">
       <div className="chat-topbar">
         <div className="chat-topbar-main">
-          <div className="panel-kicker">Grounded QA</div>
+          <div className="panel-kicker chat-kicker">
+            <Sparkle size={12} />
+            Grounded QA
+          </div>
           <h2>Hybrid retrieval scoped to the active corpus.</h2>
           <CorpusBanner domain={selectedDomain} />
         </div>
@@ -180,12 +183,7 @@ export default function ChatPanel({ selectedDomain, onInteractionComplete, metri
             </div>
           </div>
         ) : (
-          <MessageList
-            messages={messages}
-            loading={loading}
-            onFollowUp={submit}
-            onFeedback={setFeedback}
-          />
+          <MessageList messages={messages} loading={loading} onFollowUp={submit} />
         )}
       </div>
 

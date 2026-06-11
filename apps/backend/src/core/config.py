@@ -26,6 +26,13 @@ class Settings(BaseSettings):
     milvus_vector_field_name: str = "embedding"
     milvus_metric_type: str = "COSINE"
     cors_origins: str = "http://localhost:5173,http://localhost:3000"
+    # Supabase project URL (https://<ref>.supabase.co). Enables verification of
+    # asymmetric (ES256/RS256) access tokens via the project's JWKS endpoint.
+    supabase_url: str = ""
+    # Legacy HS256 JWT secret (Project Settings → JWT Keys → Legacy JWT secret).
+    # Only needed while the project's current signing key is the legacy shared
+    # secret; unnecessary once rotated to an ES256 signing key.
+    supabase_jwt_secret: str = ""
 
     retrieval_semantic_k: int = 10
     retrieval_lexical_k: int = 10

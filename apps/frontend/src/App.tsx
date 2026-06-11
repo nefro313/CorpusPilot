@@ -1,32 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "./auth/AuthContext";
 import ChatPanel from "./components/ChatPanel";
 import DocumentUpload from "./components/DocumentUpload";
 import { GitHubStarButton } from "./components/GitHubStarButton";
 import IndexedCorpus from "./components/IndexedCorpus";
 import { Moon, Sun } from "./components/icons";
-import { TelemetryTabs } from "./components/observability/TelemetryTabs";
 import { useDeleteDocument, useDocuments, useMetrics } from "./hooks/queries";
-import { getUserId } from "./hooks/useUserId";
+import { useTheme } from "./hooks/useTheme";
 import type { CorpusDomain } from "./types";
 
-type Theme = "dark" | "light";
-
-function getInitialTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
-  const stored = window.localStorage.getItem(
-    "ask-my-docs-theme",
-  ) as Theme | null;
-  if (stored === "dark" || stored === "light") return stored;
-  return window.matchMedia("(prefers-color-scheme: light)").matches
-    ? "light"
-    : "dark";
-}
-
-const SHORT_ID = getUserId().slice(0, 8);
-
 function App() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const { theme, toggleTheme } = useTheme();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [guideOpen, setGuideOpen] = useState(false);
   const [selectedDomain, setSelectedDomain] =
     useState<CorpusDomain>("technical_document");
@@ -34,10 +22,16 @@ function App() {
   const metricsQuery = useMetrics();
   const deleteDocument = useDeleteDocument();
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    window.localStorage.setItem("ask-my-docs-theme", theme);
-  }, [theme]);
+  const displayName =
+    (user?.user_metadata?.full_name as string | undefined) ??
+    user?.email ??
+    "Signed in";
+  const avatarUrl = user?.user_metadata?.avatar_url as string | undefined;
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/", { replace: true });
+  };
 
   const docs = documentsQuery.data ?? [];
   const metrics = metricsQuery.data ?? null;
@@ -45,13 +39,6 @@ function App() {
 
   return (
     <div className="shell">
-      <div className="session-notice" role="note">
-        <span className="session-notice-dot" aria-hidden="true" />
-        Your workspace is <strong>private to this browser</strong> — documents
-        and chats are isolated from all other users.&nbsp;
-        <span className="session-notice-id">Session&nbsp;{SHORT_ID}</span>
-      </div>
-
       <div className="ambient ambient-a" />
       <div className="ambient ambient-b" />
       <div className="ambient ambient-c" />
@@ -70,24 +57,46 @@ function App() {
             <div className="hero-right">
               <div className="hero-right-top">
                 <h1>
-                  Ask My Docs for{" "}
-                  <span>domain-specific corpora</span>, with hybrid retrieval,
-                  citation enforcement, and live telemetry.
+                  Ask My Docs for <span>domain-specific corpora</span>, with
+                  hybrid retrieval, citation enforcement, and live telemetry.
                 </h1>
                 <div className="hero-actions">
                   <GitHubStarButton />
                   <button
                     type="button"
                     className="theme-toggle"
-                    onClick={() =>
-                      setTheme((current) =>
-                        current === "dark" ? "light" : "dark",
-                      )
-                    }
+                    onClick={toggleTheme}
                     aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                   >
                     {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
                   </button>
+                  <div className="user-chip">
+                    {avatarUrl ? (
+                      <img
+                        className="user-chip-avatar"
+                        src={avatarUrl}
+                        alt=""
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <span
+                        className="user-chip-avatar fallback"
+                        aria-hidden="true"
+                      >
+                        {displayName.charAt(0).toUpperCase()}
+                      </span>
+                    )}
+                    <span className="user-chip-name" title={user?.email ?? ""}>
+                      {displayName}
+                    </span>
+                    <button
+                      type="button"
+                      className="user-chip-signout"
+                      onClick={handleSignOut}
+                    >
+                      Sign out
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -105,14 +114,6 @@ function App() {
 
                 {guideOpen && (
                   <div className="hero-guide">
-                    <div className="guide-step">
-                      <span className="guide-num">01</span>
-                      <span className="guide-text">
-                        Your workspace is <strong>private to this browser</strong> — no
-                        sign-in needed. A unique session ID is stored locally so your
-                        documents and chat history are invisible to everyone else.
-                      </span>
-                    </div>
                     <div className="guide-step">
                       <span className="guide-num">02</span>
                       <span className="guide-text">
@@ -147,17 +148,6 @@ function App() {
             selectedDomain={selectedDomain}
             onDomainChange={setSelectedDomain}
           />
-          <TelemetryTabs />
-          <a
-            href="https://www.buymeacoffee.com/Nefero"
-            target="_blank"
-            rel="noreferrer"
-            className="bmc-inline"
-            aria-label="Buy Me a Coffee"
-          >
-            <span className="bmc-icon">☕</span>
-            <span className="bmc-text">Buy me a coffee</span>
-          </a>
         </aside>
 
         <div className="workspace-right">

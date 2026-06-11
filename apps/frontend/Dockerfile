@@ -1,11 +1,20 @@
-FROM node:20-alpine AS build
+FROM node:20-alpine AS deps
 
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
 RUN npm install
 
+FROM deps AS build
+
 COPY . .
+
+# Vite inlines VITE_* vars at build time; pass them as build args in compose/CI.
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_ANON_KEY
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL \
+    VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+
 RUN npm run build
 
 # Serve with nginx

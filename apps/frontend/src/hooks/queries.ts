@@ -6,8 +6,6 @@ import type { FeedbackRequest } from "../types";
 export const queryKeys = {
   documents: ["documents"] as const,
   metrics: ["observability", "summary"] as const,
-  anomalies: (threshold: number) => ["observability", "anomalies", threshold] as const,
-  feedback: ["observability", "feedback"] as const,
 };
 
 export function useDocuments() {
@@ -27,24 +25,6 @@ export function useMetrics() {
   });
 }
 
-export function useAnomalies(threshold = 2.5) {
-  return useQuery({
-    queryKey: queryKeys.anomalies(threshold),
-    queryFn: () => api.anomalies(threshold),
-    refetchInterval: 60_000,
-    staleTime: 30_000,
-  });
-}
-
-export function useFeedbackSummary() {
-  return useQuery({
-    queryKey: queryKeys.feedback,
-    queryFn: api.feedbackSummary,
-    refetchInterval: 60_000,
-    staleTime: 30_000,
-  });
-}
-
 export function useDeleteDocument() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -57,11 +37,7 @@ export function useDeleteDocument() {
 }
 
 export function usePostFeedback() {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: FeedbackRequest) => api.postFeedback(payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.feedback });
-    },
   });
 }

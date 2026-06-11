@@ -125,23 +125,6 @@ export interface ObservabilityResponse {
   by_domain: DomainMetric[];
 }
 
-export interface Anomaly {
-  trace_id: string;
-  domain: CorpusDomain | null;
-  created_at: string;
-  metric: string;
-  value: number;
-  z_score: number;
-  baseline_mean: number;
-  baseline_std: number;
-}
-
-export interface AnomalyResponse {
-  threshold: number;
-  sample_size: number;
-  anomalies: Anomaly[];
-}
-
 export interface FeedbackRequest {
   question: string;
   answer: string;
@@ -155,21 +138,4 @@ export interface FeedbackRequest {
 export interface FeedbackAck {
   id: string;
   created_at: string;
-}
-
-export interface FeedbackDomainBucket {
-  total: number;
-  positive: number;
-  negative: number;
-  neutral: number;
-}
-
-export interface FeedbackSummary {
-  total: number;
-  positive: number;
-  negative: number;
-  neutral: number;
-  positive_rate: number;
-  negative_rate: number;
-  by_domain: Record<string, FeedbackDomainBucket>;
 }

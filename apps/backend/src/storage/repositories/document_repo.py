@@ -8,12 +8,13 @@ from storage.models import Document, DocumentChunk
 
 
 async def find_by_checksum(
-    db: AsyncSession, checksum: str, user_id: str
+    db: AsyncSession, checksum: str, user_id: str, domain: CorpusDomain
 ) -> Document | None:
     return await db.scalar(
         select(Document).where(
             Document.checksum == checksum,
             Document.user_id == user_id,
+            Document.domain == domain,
         )
     )
 

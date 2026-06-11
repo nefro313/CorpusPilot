@@ -131,30 +131,3 @@ class FeedbackRequest(BaseModel):
 class FeedbackAck(BaseModel):
     id: uuid.UUID
     created_at: datetime
-
-
-class FeedbackSummary(BaseModel):
-    total: int
-    positive: int
-    negative: int
-    neutral: int
-    positive_rate: float
-    negative_rate: float
-    by_domain: dict[str, dict[str, int]] = Field(default_factory=dict)
-
-
-class AnomalyOut(BaseModel):
-    trace_id: str
-    domain: CorpusDomain | None
-    created_at: datetime
-    metric: str
-    value: float
-    z_score: float
-    baseline_mean: float
-    baseline_std: float
-
-
-class AnomalyResponse(BaseModel):
-    threshold: float
-    sample_size: int
-    anomalies: list[AnomalyOut]

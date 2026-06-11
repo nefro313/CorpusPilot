@@ -72,6 +72,13 @@ export const Sparkle = (p: IconProps) => (
   </svg>
 );
 
+export const User = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="8" r="3.5" />
+    <path d="M5 20a7 7 0 0 1 14 0" />
+  </svg>
+);
+
 export const Sun = (p: IconProps) => (
   <svg {...base(p)}>
     <circle cx="12" cy="12" r="4" />

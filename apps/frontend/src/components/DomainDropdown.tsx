@@ -41,7 +41,7 @@ export default function DomainDropdown({ domains, value, onChange, disabled }: P
   const ActiveIcon = DOMAIN_ICONS[value];
 
   return (
-    <div ref={wrapperRef} className={`domain-dropdown${open ? " open" : ""}`}>
+    <div ref={wrapperRef} className={`domain-dropdown${open ? " open" : ""}`} data-domain={value}>
       <button
         type="button"
         className="domain-dropdown-trigger"

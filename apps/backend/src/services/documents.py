@@ -298,7 +298,7 @@ async def _index_document_inner(
             ),
         ), "parse"
 
-    existing = await find_by_checksum(db, prepared.checksum, user_id)
+    existing = await find_by_checksum(db, prepared.checksum, user_id, domain)
     if existing:
         profile = get_domain_profile(existing.domain)
         return UploadFileResult(
@@ -406,7 +406,7 @@ async def _index_with_progress(
                     ),
                 )
             else:
-                existing = await find_by_checksum(db, prepared.checksum, user_id)
+                existing = await find_by_checksum(db, prepared.checksum, user_id, domain)
                 if existing:
                     _stage = "dedup"
                     profile = get_domain_profile(existing.domain)

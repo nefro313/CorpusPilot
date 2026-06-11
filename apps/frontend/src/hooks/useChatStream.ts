@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { authHeader } from "../api/client";
 import { drainSseBuffer } from "../components/chat/sse";
 import type { ChatMessage } from "../components/chat/types";
 import type { ChatResponse, CorpusDomain } from "../types";
@@ -38,7 +39,11 @@ export function useChatStream(): ChatStreamApi {
     try {
       const res = await fetch("/api/chat/stream", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "X-User-ID": getUserId() },
+        headers: {
+          "Content-Type": "application/json",
+          "X-User-ID": getUserId(),
+          ...(await authHeader()),
+        },
         body: JSON.stringify({ question: trimmed, domain, session_id: sessionId }),
       });
       if (!res.ok || !res.body) throw new Error(`Stream rejected (status ${res.status})`);

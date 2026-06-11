@@ -1,7 +1,6 @@
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from schemas.api import FeedbackRequest
@@ -24,8 +23,3 @@ async def record_feedback(db: AsyncSession, payload: FeedbackRequest) -> AnswerF
     await db.commit()
     await db.refresh(row)
     return row
-
-
-async def recent_feedback(db: AsyncSession, *, limit: int) -> list[AnswerFeedback]:
-    stmt = select(AnswerFeedback).order_by(AnswerFeedback.created_at.desc()).limit(limit)
-    return list((await db.scalars(stmt)).all())
