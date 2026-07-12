@@ -9,8 +9,6 @@ from pydantic import BaseModel, Field
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from storage.models import DocumentChunk, DocumentTableRow
-
 from core.config import get_settings
 from core.metrics import (
     AGENTIC_RETRIES_TOTAL,
@@ -36,6 +34,7 @@ from services.rag.state import RAGState
 from services.rag.telemetry import estimate_cost, extract_usage
 from services.retrieval import HybridRetrievalResult, RetrievedChunk, hybrid_search
 from services.retrieval.fusion import reciprocal_rank_fusion
+from storage.models import DocumentChunk, DocumentTableRow
 
 settings = get_settings()
 logger = logging.getLogger(__name__)
@@ -132,9 +131,7 @@ class GeneratedSQL(BaseModel):
 def _is_safe_select(sql: str) -> bool:
     if not sql or not _SAFE_SQL_PATTERN.match(sql):
         return False
-    if _SQL_FORBIDDEN.search(sql):
-        return False
-    return True
+    return not _SQL_FORBIDDEN.search(sql)
 
 
 async def sql_table_node(db: AsyncSession, state: RAGState) -> RAGState:
@@ -319,7 +316,7 @@ async def expand_query_node(state: RAGState) -> RAGState:
         )
 
 
-async def retrieve_node(db: AsyncSession, state: RAGState) -> RAGState:  # noqa: C901
+async def retrieve_node(db: AsyncSession, state: RAGState) -> RAGState:
     _t = time.monotonic()
     domain_label = state.get("domain") or "all"
     try:

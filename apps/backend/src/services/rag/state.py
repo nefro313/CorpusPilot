@@ -24,9 +24,9 @@ class RAGState(TypedDict, total=False):
     follow_up_questions: list[str]
     sql_context: str | None
     # ── Agentic control fields ────────────────────────────────────────────────
-    # retry_count   – how many retrieval-retry loops have fired this request
-    # needs_broader_query – signal from grade_retrieval / validate to widen search
-    # retrieval_grade_reason – human-readable explanation from the grader LLM
+    # retry_count   - how many retrieval-retry loops have fired this request
+    # needs_broader_query - signal from grade_retrieval / validate to widen search
+    # retrieval_grade_reason - human-readable explanation from the grader LLM
     retry_count: int
     needs_broader_query: bool
     retrieval_grade_reason: str

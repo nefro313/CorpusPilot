@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../auth/AuthContext";
 import { GoogleSignInButton } from "../auth/GoogleSignInButton";
-import { GitHubStarButton } from "../components/GitHubStarButton";
 import {
   Book,
   Chart,
@@ -213,10 +212,9 @@ export default function Landing() {
           className="landing-nav-brand"
           aria-label="Ask My Docs home"
         >
-          <img src="/main_left_top_logo.svg" alt="Ask My Docs" />
+          <img src="/landing-nav-logo.svg" alt="Ask My Docs" />
         </Link>
         <div className="landing-nav-actions">
-          <GitHubStarButton />
           <button
             type="button"
             className="theme-toggle"

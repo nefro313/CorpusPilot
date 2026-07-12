@@ -1158,8 +1158,8 @@ button {
   background: var(--panel);
   padding: var(--surface-pad);
   box-shadow: var(--shadow);
-  height: clamp(680px, calc(100vh - 240px), 920px);
-  height: clamp(680px, calc(100dvh - 240px), 920px);
+  height: clamp(760px, calc(100vh - 160px), 1080px);
+  height: clamp(760px, calc(100dvh - 160px), 1080px);
   overflow: hidden;
 }
 

@@ -31,7 +31,7 @@ def _verify_token(token: str) -> dict:
     try:
         alg = jwt.get_unverified_header(token).get("alg", "")
     except jwt.InvalidTokenError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise HTTPException(status_code=401, detail="Invalid token") from None
 
     if alg == "HS256" and settings.supabase_jwt_secret:
         key = settings.supabase_jwt_secret
@@ -39,16 +39,16 @@ def _verify_token(token: str) -> dict:
         try:
             key = _jwks().get_signing_key_from_jwt(token).key
         except jwt.PyJWKClientError:
-            raise HTTPException(status_code=401, detail="Unknown signing key")
+            raise HTTPException(status_code=401, detail="Unknown signing key") from None
     else:
         raise HTTPException(status_code=401, detail="Unsupported token")
 
     try:
         return jwt.decode(token, key, algorithms=[alg], audience="authenticated")
     except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Token expired")
+        raise HTTPException(status_code=401, detail="Token expired") from None
     except jwt.InvalidTokenError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise HTTPException(status_code=401, detail="Invalid token") from None
 
 
 async def get_user_id(
