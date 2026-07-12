@@ -1,5 +1,5 @@
 from llama_index.core.schema import NodeWithScore
-from llama_index.core.vector_stores import ExactMatchFilter, MetadataFilters
+from llama_index.core.vector_stores import ExactMatchFilter, MetadataFilter, MetadataFilters
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from domain.profiles import CorpusDomain
@@ -43,7 +43,7 @@ async def semantic_search(
     user_id: str = "",
 ) -> list[RetrievedChunk]:
     index = get_llamaindex_index()
-    filter_list: list[ExactMatchFilter] = []
+    filter_list: list[MetadataFilter | MetadataFilters] = []
     if user_id:
         filter_list.append(ExactMatchFilter(key="user_id", value=user_id))
     if domain:

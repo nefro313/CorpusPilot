@@ -1,0 +1,35 @@
+<svg viewBox="0 0 440 100" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Ask My Docs</title>
+
+  <!-- ===== Document icon (simplified for small sizes) ===== -->
+  <g transform="translate(3, 8) scale(0.55)">
+    <!-- Back page -->
+    <rect x="22" y="12" width="124" height="140" rx="10" fill="#0d1f35" stroke="#1a3a5c" stroke-width="2"/>
+    <!-- Mid page -->
+    <rect x="11" y="7" width="124" height="140" rx="10" fill="#0f2540" stroke="#1e4870" stroke-width="2"/>
+    <!-- Front page -->
+    <rect x="0" y="0" width="124" height="140" rx="10" fill="#112a50" stroke="#00cccc" stroke-width="2.5"/>
+
+    <!-- Corner fold -->
+    <polygon points="92,0 124,0 124,32" fill="#0a1f38"/>
+    <polyline points="92,0 92,32 124,32" fill="none" stroke="#00cccc" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+
+    <!-- Title lines -->
+    <rect x="16" y="18" width="58" height="10" rx="5" fill="#00cccc"/>
+    <rect x="16" y="36" width="42" height="7" rx="3.5" fill="#00cccc" opacity="0.35"/>
+
+    <!-- Domain lines: Technical / Research / Legal / Healthcare -->
+    <rect x="16" y="58" width="80" height="9" rx="4.5" fill="#00cccc" opacity="0.9"/>
+    <rect x="16" y="78" width="64" height="9" rx="4.5" fill="#f0a030" opacity="0.9"/>
+    <rect x="16" y="98" width="72" height="9" rx="4.5" fill="#9966ff" opacity="0.9"/>
+    <rect x="16" y="118" width="56" height="9" rx="4.5" fill="#22bb88" opacity="0.9"/>
+
+    <!-- Bottom accent -->
+    <line x1="6" y1="140" x2="118" y2="140" stroke="#00cccc" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- ===== Wordmark (single line) ===== -->
+  <text x="101" y="68" font-family="'Segoe UI', -apple-system, 'system-ui', Roboto, sans-serif" font-size="52" font-weight="700" letter-spacing="-1.2">
+    <tspan fill="#ffffff">Ask My</tspan><tspan dx="14" fill="#00cccc">Docs</tspan>
+  </text>
+</svg>
