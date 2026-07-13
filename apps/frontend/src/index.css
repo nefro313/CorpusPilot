@@ -528,6 +528,21 @@ button {
   padding: var(--surface-pad);
   box-shadow: var(--shadow);
   overflow: visible;
+  gap: var(--panel-gap);
+}
+
+/* Indexed Corpus nested under the upload panel — match the ingest sub-panel
+   look rather than the standalone card it used to be in the right column. */
+.sidebar .indexed-panel {
+  border-radius: 24px;
+  background: var(--panel-strong);
+  padding: 18px;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.sidebar .sidebar-stack {
+  flex: 0 0 auto;
 }
 
 .sidebar-stack,
@@ -1158,8 +1173,8 @@ button {
   background: var(--panel);
   padding: var(--surface-pad);
   box-shadow: var(--shadow);
-  height: clamp(760px, calc(100vh - 160px), 1080px);
-  height: clamp(760px, calc(100dvh - 160px), 1080px);
+  height: clamp(860px, calc(100vh - 96px), 1280px);
+  height: clamp(860px, calc(100dvh - 96px), 1280px);
   overflow: hidden;
 }
 
@@ -3891,23 +3906,125 @@ button:not(:disabled):active {
   position: relative;
   z-index: 1;
   display: flex;
+  flex-direction: column;
+  gap: 26px;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 8px 36px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.landing-footer-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.landing-footer-invite {
+  margin: 0;
+  max-width: 30ch;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.landing-footer-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.landing-footer-avatar {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--accent-rgb), 0.9),
+    rgba(var(--accent-2-rgb), 0.85)
+  );
+  color: #06121f;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.landing-footer-author-copy {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.35;
+}
+
+.landing-footer-author-copy strong {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.landing-footer-author-copy span {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.landing-footer-socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.landing-footer-social {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.landing-footer-social:hover {
+  color: var(--accent);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  background: rgba(var(--accent-rgb), 0.08);
+  transform: translateY(-2px);
+}
+
+.landing-footer-bottom {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 26px 8px 30px;
+  padding-top: 22px;
   border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 13px;
 }
 
 .landing-footer-meta {
   font-family: var(--font-mono);
   font-size: 11.5px;
   letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-footer-social:hover {
+    transform: none;
+  }
 }
 
 /* ── Google sign-in button ──────────────────────────────────── */
@@ -4230,13 +4347,34 @@ button:not(:disabled):active {
   }
 
   .landing-nav {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    gap: 10px;
     padding: 10px 12px;
   }
 
+  .landing-nav-brand {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .landing-nav-brand img {
+    height: 36px;
+  }
+
   .landing-nav-actions {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .landing-nav .theme-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .landing-signin-link {
+    height: 40px;
+    padding: 0 16px;
   }
 
   .landing-hero-actions {

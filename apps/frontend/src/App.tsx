@@ -111,17 +111,6 @@ function App() {
             selectedDomain={selectedDomain}
             onDomainChange={setSelectedDomain}
           />
-        </aside>
-
-        <div className="workspace-right">
-          <section className="content-panel">
-            <ChatPanel
-              selectedDomain={selectedDomain}
-              onInteractionComplete={() => metricsQuery.refetch()}
-              metrics={metrics}
-              docCount={docCount}
-            />
-          </section>
 
           <IndexedCorpus
             docs={docs}
@@ -136,6 +125,17 @@ function App() {
               }
             }}
           />
+        </aside>
+
+        <div className="workspace-right">
+          <section className="content-panel">
+            <ChatPanel
+              selectedDomain={selectedDomain}
+              onInteractionComplete={() => metricsQuery.refetch()}
+              metrics={metrics}
+              docCount={docCount}
+            />
+          </section>
         </div>
       </main>
     </div>
