@@ -1,0 +1,32 @@
+[
+  {
+    "domain": "technical_document",
+    "fixture": "technical_platform_runbook.md",
+    "question": "According to internal Anthropic research, how much do multi-agent systems outperform single-agent systems on complex tasks?",
+    "reference": "Internal Anthropic research shows that multi-agent systems outperform single-agent systems by 90.2% on complex tasks that require pursuing multiple independent directions simultaneously."
+  },
+  {
+    "domain": "research_paper",
+    "fixture": "research_rag_eval_paper.md",
+    "question": "What network architecture does the paper propose, and what does it rely on instead of recurrence and convolutions?",
+    "reference": "The paper proposes the Transformer, a network architecture based solely on attention mechanisms, dispensing with recurrence and convolutions entirely."
+  },
+  {
+    "domain": "legal_contract",
+    "fixture": "legal_master_services_agreement.md",
+    "question": "How much notice is required for termination for convenience?",
+    "reference": "Termination for convenience requires sixty (60) days' prior written notice."
+  },
+  {
+    "domain": "healthcare_document",
+    "fixture": "healthcare_discharge_summary.md",
+    "question": "What follow-up timeframe is documented after discharge?",
+    "reference": "A primary-care follow-up within 7 days is documented after discharge."
+  },
+  {
+    "domain": "financial_document",
+    "fixture": "finance_rag_eval_dosc.md",
+    "question": "What is the typical hedge fund fee structure, and what does it consist of?",
+    "reference": "Hedge funds typically charge a \"2 and 20\" fee structure, consisting of a 2% management fee plus a 20% performance fee above a hurdle rate."
+  }
+]

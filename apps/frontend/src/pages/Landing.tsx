@@ -9,6 +9,9 @@ import {
   Crosshair,
   Doc,
   Flask,
+  GitHub,
+  LinkedIn,
+  Mail,
   Moon,
   Pulse,
   Radar,
@@ -16,6 +19,7 @@ import {
   Sparkle,
   Sun,
   Timer,
+  XLogo,
 } from "../components/icons";
 import { useTheme } from "../hooks/useTheme";
 
@@ -177,6 +181,29 @@ const DEMO_SCENES = [
       </>
     ),
     trace: ["hybrid · 16 chunks", "reranked · top 5", "3 citations", "2.0s"],
+  },
+];
+
+const SOCIAL_LINKS = [
+  {
+    icon: XLogo,
+    label: "X",
+    href: "https://x.com/robinkphil",
+  },
+  {
+    icon: LinkedIn,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/robinkphilip",
+  },
+  {
+    icon: GitHub,
+    label: "GitHub",
+    href: "https://github.com/nefro313",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    href: "mailto:robinkphilip2001@gmail.com",
   },
 ];
 
@@ -468,10 +495,45 @@ export default function Landing() {
       </section>
 
       <footer className="landing-footer">
-        <span>CorpusPilot · Ask My Docs</span>
-        <span className="landing-footer-meta">
-          PostgreSQL BM25 · Milvus vectors · RRF fusion · Cohere rerank
-        </span>
+        <div className="landing-footer-contact">
+          <span className="panel-kicker">Get in touch</span>
+          <p className="landing-footer-invite">
+            For feature requests — or just to say hello — reach out any time.
+          </p>
+          <div className="landing-footer-author">
+            <span className="landing-footer-avatar" aria-hidden="true">
+              RP
+            </span>
+            <div className="landing-footer-author-copy">
+              <strong>Robin K Philip</strong>
+              <span>Builder &amp; maintainer of CorpusPilot</span>
+            </div>
+          </div>
+          <div className="landing-footer-socials">
+            {SOCIAL_LINKS.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="landing-footer-social"
+                  aria-label={social.label}
+                  {...(social.href.startsWith("http")
+                    ? { target: "_blank", rel: "noreferrer" }
+                    : {})}
+                >
+                  <Icon size={17} />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+        <div className="landing-footer-bottom">
+          <span>CorpusPilot · Ask My Docs</span>
+          <span className="landing-footer-meta">
+            PostgreSQL BM25 · Milvus vectors · RRF fusion · Cohere rerank
+          </span>
+        </div>
       </footer>
     </div>
   );
