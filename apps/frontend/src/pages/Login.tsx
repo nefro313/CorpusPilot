@@ -24,7 +24,7 @@ export default function Login() {
 
       <nav className="landing-nav login-nav">
         <Link to="/" className="landing-nav-brand" aria-label="Back to home">
-          <img src="/main_left_top_logo.svg" alt="Ask My Docs" />
+          <img src="/landing-nav-logo.svg" alt="Ask My Docs" />
         </Link>
         <button
           type="button"

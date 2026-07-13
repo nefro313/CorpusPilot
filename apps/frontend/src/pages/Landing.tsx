@@ -3,13 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../auth/AuthContext";
 import { GoogleSignInButton } from "../auth/GoogleSignInButton";
-import { GitHubStarButton } from "../components/GitHubStarButton";
 import {
   Book,
   Chart,
   Crosshair,
   Doc,
   Flask,
+  GitHub,
+  LinkedIn,
+  Mail,
   Moon,
   Pulse,
   Radar,
@@ -17,6 +19,7 @@ import {
   Sparkle,
   Sun,
   Timer,
+  XLogo,
 } from "../components/icons";
 import { useTheme } from "../hooks/useTheme";
 
@@ -181,6 +184,29 @@ const DEMO_SCENES = [
   },
 ];
 
+const SOCIAL_LINKS = [
+  {
+    icon: XLogo,
+    label: "X",
+    href: "https://x.com/robinkphil",
+  },
+  {
+    icon: LinkedIn,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/robinkphilip",
+  },
+  {
+    icon: GitHub,
+    label: "GitHub",
+    href: "https://github.com/nefro313",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    href: "mailto:robinkphilip2001@gmail.com",
+  },
+];
+
 export default function Landing() {
   const { theme, toggleTheme } = useTheme();
   const { session } = useAuth();
@@ -213,10 +239,9 @@ export default function Landing() {
           className="landing-nav-brand"
           aria-label="Ask My Docs home"
         >
-          <img src="/main_left_top_logo.svg" alt="Ask My Docs" />
+          <img src="/landing-nav-logo.svg" alt="Ask My Docs" />
         </Link>
         <div className="landing-nav-actions">
-          <GitHubStarButton />
           <button
             type="button"
             className="theme-toggle"
@@ -470,10 +495,45 @@ export default function Landing() {
       </section>
 
       <footer className="landing-footer">
-        <span>CorpusPilot · Ask My Docs</span>
-        <span className="landing-footer-meta">
-          PostgreSQL BM25 · Milvus vectors · RRF fusion · Cohere rerank
-        </span>
+        <div className="landing-footer-contact">
+          <span className="panel-kicker">Get in touch</span>
+          <p className="landing-footer-invite">
+            For feature requests — or just to say hello — reach out any time.
+          </p>
+          <div className="landing-footer-author">
+            <span className="landing-footer-avatar" aria-hidden="true">
+              RP
+            </span>
+            <div className="landing-footer-author-copy">
+              <strong>Robin K Philip</strong>
+              <span>Builder &amp; maintainer of CorpusPilot</span>
+            </div>
+          </div>
+          <div className="landing-footer-socials">
+            {SOCIAL_LINKS.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="landing-footer-social"
+                  aria-label={social.label}
+                  {...(social.href.startsWith("http")
+                    ? { target: "_blank", rel: "noreferrer" }
+                    : {})}
+                >
+                  <Icon size={17} />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+        <div className="landing-footer-bottom">
+          <span>CorpusPilot · Ask My Docs</span>
+          <span className="landing-footer-meta">
+            PostgreSQL BM25 · Milvus vectors · RRF fusion · Cohere rerank
+          </span>
+        </div>
       </footer>
     </div>
   );

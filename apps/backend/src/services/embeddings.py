@@ -4,10 +4,6 @@ from core.config import get_settings
 from services.llm import get_embeddings
 
 
-async def embed_query(text: str) -> list[float]:
-    return await get_embeddings().aembed_query(text)
-
-
 async def embed_documents(texts: list[str]) -> list[list[float]]:
     return await get_embeddings().aembed_documents(texts)
 

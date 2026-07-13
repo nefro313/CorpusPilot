@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 import ChatPanel from "./components/ChatPanel";
 import DocumentUpload from "./components/DocumentUpload";
-import { GitHubStarButton } from "./components/GitHubStarButton";
 import IndexedCorpus from "./components/IndexedCorpus";
 import { Moon, Sun } from "./components/icons";
 import { useDeleteDocument, useDocuments, useMetrics } from "./hooks/queries";
@@ -15,7 +14,6 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const [guideOpen, setGuideOpen] = useState(false);
   const [selectedDomain, setSelectedDomain] =
     useState<CorpusDomain>("technical_document");
   const documentsQuery = useDocuments();
@@ -61,7 +59,6 @@ function App() {
                   hybrid retrieval, citation enforcement, and live telemetry.
                 </h1>
                 <div className="hero-actions">
-                  <GitHubStarButton />
                   <button
                     type="button"
                     className="theme-toggle"
@@ -99,40 +96,6 @@ function App() {
                   </div>
                 </div>
               </div>
-
-              <div className="hero-get-started">
-                <button
-                  type="button"
-                  className={`get-started-btn${guideOpen ? " open" : ""}`}
-                  onClick={() => setGuideOpen((o) => !o)}
-                >
-                  <span className="get-started-arrow" aria-hidden>
-                    {guideOpen ? "▲" : "▼"}
-                  </span>
-                  How to Get Started
-                </button>
-
-                {guideOpen && (
-                  <div className="hero-guide">
-                    <div className="guide-step">
-                      <span className="guide-num">02</span>
-                      <span className="guide-text">
-                        Drop your PDFs and documents into the{" "}
-                        <strong>Corpus Ingestion Panel</strong> on the left —
-                        we'll chunk, embed, and index them instantly.
-                      </span>
-                    </div>
-                    <div className="guide-step">
-                      <span className="guide-num">03</span>
-                      <span className="guide-text">
-                        Open the <strong>Chat Panel</strong> to the right, ask
-                        anything on your docs — every answer arrives with
-                        grounded citations and live pipeline stats.
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </div>
@@ -148,17 +111,6 @@ function App() {
             selectedDomain={selectedDomain}
             onDomainChange={setSelectedDomain}
           />
-        </aside>
-
-        <div className="workspace-right">
-          <section className="content-panel">
-            <ChatPanel
-              selectedDomain={selectedDomain}
-              onInteractionComplete={() => metricsQuery.refetch()}
-              metrics={metrics}
-              docCount={docCount}
-            />
-          </section>
 
           <IndexedCorpus
             docs={docs}
@@ -173,6 +125,17 @@ function App() {
               }
             }}
           />
+        </aside>
+
+        <div className="workspace-right">
+          <section className="content-panel">
+            <ChatPanel
+              selectedDomain={selectedDomain}
+              onInteractionComplete={() => metricsQuery.refetch()}
+              metrics={metrics}
+              docCount={docCount}
+            />
+          </section>
         </div>
       </main>
     </div>

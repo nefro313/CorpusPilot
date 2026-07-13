@@ -39,8 +39,6 @@ def _route_after_validate(state: RAGState) -> str:
 
 
 def build_graph(db):
-    from sqlalchemy.ext.asyncio import AsyncSession  # local import avoids circular dep
-
     async def _retrieve(state: RAGState) -> RAGState:
         return await retrieve_node(db, state)
 

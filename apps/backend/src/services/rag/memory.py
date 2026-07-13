@@ -51,7 +51,3 @@ def clear_session(session_id: str | None) -> bool:
     if not session_id:
         return False
     return _session_history.pop(session_id, None) is not None
-
-
-def session_count() -> int:
-    return len(_session_history)
